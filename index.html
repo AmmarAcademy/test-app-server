@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hello, World!</h1>
+    <form id="nameForm">
+      <label for="username">Enter your name:</label><br>
+      <input type="text" id="username" name="username" required>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="message" style="color: green; display: none;"></div>
+  </div>
+
+  <script>
+    document.getElementById("nameForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const response = await fetch('/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+      const result = await response.json();
+      document.getElementById("message").textContent = result.message;
+      document.getElementById("message").style.display = "block";
+    });
+  </script>
+</body>
+</html>
+
